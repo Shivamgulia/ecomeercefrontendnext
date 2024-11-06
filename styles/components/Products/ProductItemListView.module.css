@@ -1,0 +1,115 @@
+/* Main horizontal product card styling */
+.productCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80vw;
+  height: 20vh;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 20px;
+  margin: 20px;
+  transition: transform 0.2s ease;
+}
+
+.productCard:hover {
+  transform: translateY(-5px);
+}
+
+/* Product image on the left side */
+.productImage {
+  height: 95%;
+  width: auto;
+  border-radius: 8px;
+  margin-right: 20px;
+  object-fit: cover;
+}
+
+/* Content container for product details and buttons */
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Product name styling */
+/* h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333333;
+  margin: 0;
+} */
+
+/* Product description styling */
+.description {
+  font-size: 14px;
+  color: #666666;
+  margin: 8px 0 12px;
+}
+
+/* Price container styling */
+.price {
+  font-size: 18px;
+  color: #333333;
+  font-weight: 500;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 1rem;
+}
+
+/* Original price with strikethrough effect */
+.originalPrice {
+  color: #999999;
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+
+/* Discounted price styling */
+.discountedPrice {
+  color: #e63946;
+  font-weight: 600;
+}
+
+.quantity {
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+/* Button container */
+.buttonContainer {
+  display: grid;
+  gap: 10px;
+}
+
+/* Edit and Delete button styling */
+.editButton,
+.deleteButton {
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.editButton {
+  background-color: #0066cc;
+}
+
+.editButton:hover {
+  background-color: #005bb5;
+}
+
+.deleteButton {
+  background-color: #e63946;
+}
+
+.deleteButton:hover {
+  background-color: #d62828;
+}

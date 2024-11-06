@@ -1,0 +1,83 @@
+/* Container for centering and spacing */
+.cont {
+  display: grid;
+  place-items: center;
+  height: 93vh;
+  background-color: #f0f2f5;
+  padding: 20px;
+  gap: 2rem;
+}
+
+.head {
+  color: #0066cc;
+  font-size: 50px;
+}
+
+/* Form styling with a card-like look */
+.form {
+  width: 30vw;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Input field and label container spacing */
+.inputDiv {
+  margin-bottom: 18px;
+}
+
+/* Label with slight color and spacing */
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 6px;
+}
+
+/* Styling for input fields */
+.input,
+.textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  color: #333333;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+/* Focus state for input fields */
+.input:focus,
+.textarea:focus {
+  border-color: #0066cc;
+  background-color: #ffffff;
+  box-shadow: 0 0 5px rgba(0, 102, 204, 0.1);
+}
+
+/* Button with vibrant color and hover effect */
+.submitButton {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #0066cc;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Button hover state for user feedback */
+.submitButton:hover {
+  background-color: #005bb5;
+}
+
+/* Adjusts focus outline for accessibility */
+.submitButton:focus {
+  outline: 2px solid #005bb5;
+}

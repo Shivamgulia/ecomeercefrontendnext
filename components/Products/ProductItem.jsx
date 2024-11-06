@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import styles from "@/styles/components/Products/ProductItem.module.css";
+import verticalstyles from "@/styles/components/Products/ProductItem.module.css";
+import horizontalstyles from "@/styles/components/Products/ProductItemListView.module.css";
+import { useRouter } from "next/router";
 
 function ProductItem(props) {
+  const [styles, setStyles] = useState(verticalstyles);
+  const [isCart, setIsCart] = useState(false);
+
+  const router = useRouter();
+
+  const handleEdit = (id) => {
+    alert(`Edit product with ID: ${id}`);
+  };
+
+  const handleDelete = (id) => {
+    if (confirm(`Are you sure you want to delete this product?`)) {
+      setProducts(products.filter((product) => product.id !== id));
+      alert(`Product with ID: ${id} has been deleted.`);
+    }
+  };
+
+  const handlePost = (id) => {
+    if (confirm(`Are you sure you want to delete this product?`)) {
+      setProducts(products.filter((product) => product.id !== id));
+      alert(`Product with ID: ${id} has been deleted.`);
+    }
+  };
+
+  useEffect(() => {
+    console.log(router.pathname);
+    if (router.pathname == "/cart") {
+      setStyles(horizontalstyles);
+      setIsCart(true);
+    }
+  }, []);
+
   return (
     <div className={styles.productCard}>
       <img
@@ -17,6 +50,11 @@ function ProductItem(props) {
         <span className={styles.discountedPrice}>
           ${props.product.discountedPrice}
         </span>
+        {isCart && (
+          <span className={styles.quantity}>
+            quantity : {props.product.quantity}
+          </span>
+        )}
       </p>
       <div className={styles.buttonContainer}>
         <button
@@ -37,76 +75,3 @@ function ProductItem(props) {
 }
 
 export default ProductItem;
-
-// const styles = {
-//   container: {
-//     padding: "20px",
-//     textAlign: "center",
-//   },
-//   productList: {
-//     display: "grid",
-//     gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-//     gap: "20px",
-//     marginTop: "20px",
-//   },
-//   productCard: {
-//     border: "1px solid #ddd",
-//     borderRadius: "5px",
-//     padding: "15px",
-//     textAlign: "center",
-//     backgroundColor: "#fff",
-//     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-//   },
-//   productImage: {
-//     width: "100%",
-//     height: "150px",
-//     objectFit: "cover",
-//     borderRadius: "5px",
-//   },
-//   description: {
-//     color: "#555",
-//     fontSize: "14px",
-//     margin: "10px 0",
-//   },
-//   price: {
-//     fontSize: "16px",
-//     fontWeight: "bold",
-//   },
-//   originalPrice: {
-//     textDecoration: "line-through",
-//     color: "#999",
-//     marginRight: "10px",
-//   },
-//   discountedPrice: {
-//     color: "#e63946",
-//   },
-//   buttonContainer: {
-//     display: "flex",
-//     justifyContent: "space-around",
-//     marginTop: "15px",
-//   },
-//   editButton: {
-//     backgroundColor: "#4CAF50",
-//     color: "white",
-//     border: "none",
-//     padding: "10px 20px",
-//     borderRadius: "5px",
-//     cursor: "pointer",
-//   },
-//   deleteButton: {
-//     backgroundColor: "#f44336",
-//     color: "white",
-//     border: "none",
-//     padding: "10px 20px",
-//     borderRadius: "5px",
-//     cursor: "pointer",
-//   },
-//   postButton: {
-//     backgroundColor: "blue",
-//     color: "white",
-//     border: "none",
-//     padding: "10px 20px",
-//     borderRadius: "5px",
-//     cursor: "pointer",
-//   },
-// };

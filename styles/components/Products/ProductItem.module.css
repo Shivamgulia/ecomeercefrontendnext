@@ -1,4 +1,4 @@
-.container {
+/* .container {
   padding: 20px;
   text-align: center;
 }
@@ -75,4 +75,111 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+} */
+
+/* Main product card styling */
+.productCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 20px;
+  margin: 20px;
+  transition: transform 0.2s ease;
+}
+
+.productCard:hover {
+  transform: translateY(-5px);
+}
+
+/* Product image styling */
+.productImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+/* Product name styling */
+/* h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333333;
+  text-align: center;
+  margin: 10px 0;
+} */
+
+/* Product description styling */
+.description {
+  font-size: 14px;
+  color: #666666;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Price styling container */
+.price {
+  font-size: 18px;
+  color: #333333;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Original price styling (strikethrough) */
+.originalPrice {
+  color: #999999;
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+
+/* Discounted price styling */
+.discountedPrice {
+  color: #e63946;
+  font-weight: 600;
+}
+
+/* Button container for aligning buttons */
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Edit button styling */
+.editButton,
+.deleteButton {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.editButton {
+  background-color: #0066cc;
+  margin-right: 8px;
+}
+
+.editButton:hover {
+  background-color: #005bb5;
+}
+
+/* Delete button styling */
+.deleteButton {
+  background-color: #e63946;
+}
+
+.deleteButton:hover {
+  background-color: #d62828;
 }

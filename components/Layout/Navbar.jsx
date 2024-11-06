@@ -17,10 +17,10 @@ const Navbar = () => {
         <Link href="/" className={styles.link}>
           Seller Profile
         </Link>
-        <Link href="/productst" className={styles.link}>
+        <Link href="/seller/products" className={styles.link}>
           List Posted Products
         </Link>
-        <Link href="/" className={styles.link}>
+        <Link href="/orders" className={styles.link}>
           View Orders
         </Link>
         <div className={styles.link} onClick={signOut}>
