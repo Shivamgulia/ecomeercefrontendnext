@@ -44,9 +44,19 @@ function SignUp() {
   return (
     <>
       <div className={`${styles.cont}`}>
+      <button
+          className={`${styles.goback}`}
+          onClick={() => {
+            router.push("/login");
+          }}
+        >
+          Login
+          {/* <IoIosArrowBack size="30px" /> Back to Ships */}
+        </button>
         <div className={styles.loginCont}>
           <div className={`${styles.formDiv}`}>
             <h1 className={`${styles.heading}`}>Create User</h1>
+           
             <form className={styles.loginForm} onSubmit={signup}>
               <div className={`${styles.error}`}>
                 {error && <h4>SignUp Failed</h4>}
