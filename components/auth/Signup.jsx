@@ -4,14 +4,22 @@ import styles from "@/styles/components/Auth/Signup.module.css";
 
 // import { signUp } from "../lib/authApi";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
-function SignUp() {
+function SignUp(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [desList, setDesList] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
+  const session = useSession();
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/");
+    }
+  }, [session]);
 
   async function signup(event) {
     event.preventDefault();
@@ -22,12 +30,23 @@ function SignUp() {
     const password = event.target[1].value;
     const admin = event.target[2].checked;
 
-    // const response = await signUp({
-    //   email,
-    //   password,
-    //   admin,
-    //   ship: router.query.shipname,
-    // });
+    if (props.role == buyer) {
+      //customer signup
+      // const response = await customerSignUp({
+      //   email,
+      //   password,
+      //   admin,
+      //   ship: router.query.shipname,
+      // });
+    } else {
+      //customer signup
+      // const response = await sellerSignUp({
+      //   email,
+      //   password,
+      //   admin,
+      //   ship: router.query.shipname,
+      // });
+    }
 
     const response = "a";
 

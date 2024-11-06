@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import Image from "next/image";
 
 import styles from "@/styles/components/auth/Login.module.css";
 
-export default function Login() {
+export default function Login(props) {
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [showPassword, setShowPassword] = useState(false);
@@ -21,6 +21,7 @@ export default function Login() {
 
   useEffect(() => {
     if (session.status === "authenticated") {
+      router.push("/");
     }
   }, [session]);
 
@@ -28,10 +29,12 @@ export default function Login() {
     event.preventDefault();
     setLoading(true);
 
+    console.log(props, props.role);
+
     const res = await signIn("credentials", {
       email: userName,
       password: password,
-      shipname: router.query.shipname,
+      role: props.role,
       redirect: false,
     });
 
@@ -58,6 +61,7 @@ export default function Login() {
 
         <div className={`${styles.formDiv}`}>
           <h1 className={`${styles.heading}`}>Login</h1>
+          <button onClick={signOut}>logout</button>
           <form action="" className={styles.loginForm} onSubmit={onSubmit}>
             <div className={`${styles.error}`}>
               {error && <h4>Invalid Credentials</h4>}

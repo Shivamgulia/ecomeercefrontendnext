@@ -29,7 +29,7 @@ function login() {
         <title>Login</title>
       </Head>
       {/* {session.status === "loading" ? <Loading /> : <Login />} */}
-      <Login role="buyer" />
+      <Login role="seller" />
     </Fragment>
   );
 }

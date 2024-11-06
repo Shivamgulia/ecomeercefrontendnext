@@ -26,7 +26,7 @@ function Signup() {
         <title>Sign Up</title>
       </Head>
 
-      {session.status != "loading" && <SignUp />}
+      {session.status != "loading" && <SignUp role="buyer" />}
     </Fragment>
   );
 }
