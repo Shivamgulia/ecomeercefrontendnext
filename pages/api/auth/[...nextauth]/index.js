@@ -38,7 +38,7 @@ export default NextAuth({
           if (!response.ok) {
             throw Error("Invalid");
           }
-          return data;
+          return { ...data, role: credentials.role };
         } else {
           console.log(`${process.env.API_URL}/test/sellerlogin/`);
           const response = await fetch(
@@ -60,7 +60,7 @@ export default NextAuth({
           if (!response.ok) {
             throw Error("Invalid");
           }
-          return data;
+          return { ...data, role: credentials.role };
         }
       },
     }),

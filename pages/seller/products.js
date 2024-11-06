@@ -1,4 +1,7 @@
 // pages/seller/products.js
+import Layout from "@/components/Layout/Layout";
+import ProductList from "@/components/Products/ProductList";
+import { demoProducts } from "@/components/util/demoProducts";
 import React from "react";
 
 export default function Products() {
@@ -46,54 +49,9 @@ export default function Products() {
   };
 
   return (
-    <div style={styles.container}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <h1>Available Products</h1>
-        <button style={styles.postButton} onClick={() => handlePost()}>
-          Post New Product
-        </button>
-      </div>
-
-      <div style={styles.productList}>
-        {products.map((product) => (
-          <div key={product.id} style={styles.productCard}>
-            <img
-              src={product.image}
-              alt={product.name}
-              style={styles.productImage}
-            />
-            <h2>{product.name}</h2>
-            <p style={styles.description}>{product.description}</p>
-            <p style={styles.price}>
-              <span style={styles.originalPrice}>${product.price}</span>
-              <span style={styles.discountedPrice}>
-                ${product.discountedPrice}
-              </span>
-            </p>
-            <div style={styles.buttonContainer}>
-              <button
-                style={styles.editButton}
-                onClick={() => handleEdit(product.id)}
-              >
-                Edit
-              </button>
-              <button
-                style={styles.deleteButton}
-                onClick={() => handleDelete(product.id)}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Layout>
+      <ProductList products={demoProducts} />
+    </Layout>
   );
 }
 
