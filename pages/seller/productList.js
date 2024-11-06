@@ -1,5 +1,7 @@
 // pages/seller/products.js
 import React from "react";
+import Navbar from "@/components/Navbar";
+
 
 export default function Products() {
   // Sample product data
@@ -46,6 +48,8 @@ export default function Products() {
   };
 
   return (
+    <>
+    <Navbar />
     <div style={styles.container}>
       <div
         style={{
@@ -94,6 +98,7 @@ export default function Products() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 

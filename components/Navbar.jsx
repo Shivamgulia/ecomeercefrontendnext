@@ -37,18 +37,18 @@ const Navbar = () => {
 
       {/* Navigation Tabs */}
       <div style={navbarStyles.navLinks}>
-        <Link href="/" style={navbarStyles.link}>
+        <Link href="/seller/profile" style={navbarStyles.link}>
           Seller Profile
         </Link>
-        <Link href="/product_list" style={navbarStyles.link}>
+        <Link href="/seller/productList" style={navbarStyles.link}>
           List Posted Products
         </Link>
-        <Link href="/" style={navbarStyles.link}>
+        <Link href="/seller/orders" style={navbarStyles.link}>
           View Orders
         </Link>
-        <Link href="/" style={navbarStyles.link}>
+        {/* <Link href="/" style={navbarStyles.link}>
           Related Tab 2
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
