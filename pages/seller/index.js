@@ -1,13 +1,10 @@
-import React from 'react'
-import Navbar from "@/components/Navbar";
+import React from "react";
 
+import Layout from "@/components/Layout/Layout";
 
 function index() {
-  return (
-    <div>
-        <Navbar />
-    </div>
-  )
+  // return <div>hello</div>;
+  return <Layout>main</Layout>;
 }
 
-export default index
+export default index;
