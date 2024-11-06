@@ -13,25 +13,55 @@ export default NextAuth({
       credentials: {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
+        role: { label: "Role", type: "text", placeholder: "customer/ seller" },
       },
+
       async authorize(credentials, req) {
-        const response = await fetch(`${process.env.API_URL}/api/token/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: credentials.email,
-            password: credentials.password,
-          }),
-        });
+        if (credentials.role == "buyer") {
+          console.log(`${process.env.API_URL}/test/customerlogin/`);
+          const response = await fetch(
+            `${process.env.API_URL}/test/customerlogin/`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: credentials.email,
+                password: credentials.password,
+              }),
+            }
+          );
 
-        const data = await response.json();
+          const data = await response.json();
 
-        if (!response.ok) {
-          throw Error("Invalid");
+          if (!response.ok) {
+            throw Error("Invalid");
+          }
+          return data;
+        } else {
+          console.log(`${process.env.API_URL}/test/sellerlogin/`);
+          const response = await fetch(
+            `${process.env.API_URL}/test/sellerlogin/`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: credentials.email,
+                password: credentials.password,
+              }),
+            }
+          );
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw Error("Invalid");
+          }
+          return data;
         }
-        return data;
       },
     }),
   ],
