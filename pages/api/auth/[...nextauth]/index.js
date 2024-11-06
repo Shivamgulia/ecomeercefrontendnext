@@ -13,23 +13,18 @@ export default NextAuth({
       credentials: {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
-        ship: { label: "Ship", type: "text" },
       },
       async authorize(credentials, req) {
-        const response = await fetch(
-          `${process.env.APPLICATION_URL}/api/auth/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: credentials.email,
-              password: credentials.password,
-              ship: credentials.ship,
-            }),
-          }
-        );
+        const response = await fetch(`${process.env.API_URL}/api/token/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: credentials.email,
+            password: credentials.password,
+          }),
+        });
 
         const data = await response.json();
 
