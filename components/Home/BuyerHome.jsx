@@ -8,7 +8,6 @@ import { demoProducts } from "@/components/util/demoProducts";
 function BuyerHome() {
   return (
     <Layout>
-      BuyerHome
       <ProductList products={demoProducts} />
     </Layout>
   );

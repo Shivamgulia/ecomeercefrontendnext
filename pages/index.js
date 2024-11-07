@@ -46,7 +46,7 @@ export default function Home() {
       )}
       {user.role == "seller" && (
         <>
-          <SellerHome />
+          <SellerHome user={user} />
         </>
       )}
     </>

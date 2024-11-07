@@ -28,6 +28,10 @@ function ProductItem(props) {
     }
   };
 
+  function handleBuy(id) {}
+
+  function handleCart(id) {}
+
   useEffect(() => {
     console.log(router.pathname);
     if (router.pathname == "/cart") {
@@ -56,20 +60,38 @@ function ProductItem(props) {
           </span>
         )}
       </p>
-      <div className={styles.buttonContainer}>
-        <button
-          className={styles.editButton}
-          onClick={() => handleEdit(props.product.id)}
-        >
-          Edit
-        </button>
-        <button
-          className={styles.deleteButton}
-          onClick={() => handleDelete(props.product.id)}
-        >
-          Delete
-        </button>
-      </div>
+      {router.pathname == "/seller/products" && (
+        <div className={styles.buttonContainer}>
+          <button
+            className={styles.editButton}
+            onClick={() => handleEdit(props.product.id)}
+          >
+            Edit
+          </button>
+          <button
+            className={styles.deleteButton}
+            onClick={() => handleDelete(props.product.id)}
+          >
+            Delete
+          </button>
+        </div>
+      )}
+      {router.pathname == "/" && (
+        <div className={styles.buttonContainer}>
+          <button
+            className={styles.editButton}
+            onClick={() => handleCart(props.product.id)}
+          >
+            Add To Cart
+          </button>
+          <button
+            className={styles.deleteButton}
+            onClick={() => handleBuy(props.product.id)}
+          >
+            Buy
+          </button>
+        </div>
+      )}
     </div>
   );
 }

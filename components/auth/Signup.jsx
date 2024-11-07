@@ -1,8 +1,5 @@
-import React, { Fragment, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/components/Auth/Signup.module.css";
-// import toast from "react-hot-toast";
-
-// import { signUp } from "../lib/authApi";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
@@ -19,7 +16,7 @@ function SignUp(props) {
     if (session.status === "authenticated") {
       router.push("/");
     }
-  }, [session]);
+  }, [session.status]);
 
   async function signup(event) {
     event.preventDefault();
@@ -63,7 +60,7 @@ function SignUp(props) {
   return (
     <>
       <div className={`${styles.cont}`}>
-      <button
+        <button
           className={`${styles.goback}`}
           onClick={() => {
             router.push("/login");
@@ -75,7 +72,7 @@ function SignUp(props) {
         <div className={styles.loginCont}>
           <div className={`${styles.formDiv}`}>
             <h1 className={`${styles.heading}`}>Create User</h1>
-           
+
             <form className={styles.loginForm} onSubmit={signup}>
               <div className={`${styles.error}`}>
                 {error && <h4>SignUp Failed</h4>}
@@ -108,14 +105,14 @@ function SignUp(props) {
                   required
                 />
               </div>
-              <div className={`${styles.showPasswordDiv}`}>
+              {/* <div className={`${styles.showPasswordDiv}`}>
                 <input
                   type="checkbox"
                   id="showP"
                   className={`${styles.passCheck}`}
                 />
                 <label htmlFor="showP">Admin</label>
-              </div>
+              </div> */}
               <div className={`${styles.showPasswordDiv}`}>
                 <input
                   type="checkbox"
