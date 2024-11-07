@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "@/styles/components/Auth/Signup.module.css";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";  // Import toast for notifications
 
 function SignUp(props) {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [desList, setDesList] = useState([]);
+  const [error, setError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const session = useSession();
 
@@ -21,39 +21,36 @@ function SignUp(props) {
   async function signup(event) {
     event.preventDefault();
     setLoading(true);
-    setError(false);
+    setError(null);
 
-    const email = event.target[0].value;
-    const password = event.target[1].value;
-    const admin = event.target[2].checked;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
 
-    if (props.role == buyer) {
-      //customer signup
-      // const response = await customerSignUp({
-      //   email,
-      //   password,
-      //   admin,
-      //   ship: router.query.shipname,
-      // });
-    } else {
-      //customer signup
-      // const response = await sellerSignUp({
-      //   email,
-      //   password,
-      //   admin,
-      //   ship: router.query.shipname,
-      // });
-    }
+    // Define endpoint based on user role
+    const endpoint =
+      props.role === "seller"
+        ? "http://127.0.0.1:8000/test/sellerregister/"
+        : "http://127.0.0.1:8000/test/customerregister/";
 
-    const response = "a";
+    try {
+      const response = await fetch(endpoint, {
+        method:"POST",headers:{
+"Content-Type": "application/json"
+        },body:JSON.stringify({ email, password })});
+      const data = response.data;
 
-    const { data } = response;
-    setError(response.error ? true : false);
-    setLoading(false);
-    if (!response.error) {
-      toast.success("User Created Successfully");
-    } else {
-      toast.error(response.error);
+      if (!data.error) {
+        toast.success("User Created Successfully");
+        router.push("/login");
+      } else {
+        setError(data.error);
+        toast.error(data.error);
+      }
+    } catch (error) {
+      setError("SignUp Failed. Please try again.");
+      toast.error("SignUp Failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -67,52 +64,45 @@ function SignUp(props) {
           }}
         >
           Login
-          {/* <IoIosArrowBack size="30px" /> Back to Ships */}
         </button>
         <div className={styles.loginCont}>
           <div className={`${styles.formDiv}`}>
             <h1 className={`${styles.heading}`}>Create User</h1>
 
             <form className={styles.loginForm} onSubmit={signup}>
-              <div className={`${styles.error}`}>
-                {error && <h4>SignUp Failed</h4>}
-              </div>
+              {error && (
+                <div className={`${styles.error}`}>
+                  <h4>{error}</h4>
+                </div>
+              )}
               <div className={styles.formInput}>
-                <label htmlFor="uname" className={styles.label}>
-                  {" "}
-                  User Name
+                <label htmlFor="email" className={styles.label}>
+                  Email
                 </label>
                 <input
-                  type="text"
-                  name="uname"
-                  id="uname"
-                  placeholder="JhonDoe"
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="john@example.com"
                   required
                   className={styles.input}
                 />
               </div>
 
               <div className={styles.formInput}>
-                <label htmlFor="pass" className={styles.label}>
-                  Passwords
+                <label htmlFor="password" className={styles.label}>
+                  Password
                 </label>
                 <input
                   className={styles.input}
                   type={showPassword ? "text" : "password"}
-                  name="pass"
-                  id="pass"
+                  name="password"
+                  id="password"
                   placeholder={showPassword ? "password@123" : "XXXXXXXXXXXX"}
                   required
                 />
               </div>
-              {/* <div className={`${styles.showPasswordDiv}`}>
-                <input
-                  type="checkbox"
-                  id="showP"
-                  className={`${styles.passCheck}`}
-                />
-                <label htmlFor="showP">Admin</label>
-              </div> */}
+
               <div className={`${styles.showPasswordDiv}`}>
                 <input
                   type="checkbox"
@@ -126,7 +116,7 @@ function SignUp(props) {
               </div>
 
               <button className={styles.loginButton} disabled={loading}>
-                {loading ? "Loading" : "Signup"}
+                {loading ? "Loading..." : "Sign Up"}
               </button>
             </form>
           </div>
