@@ -3,10 +3,13 @@ import React, { useEffect, useState } from "react";
 import verticalstyles from "@/styles/components/Products/ProductItem.module.css";
 import horizontalstyles from "@/styles/components/Products/ProductItemListView.module.css";
 import { useRouter } from "next/router";
+import Modal from "../Modal/Modal";
+import UpdateProductForm from "../Forms/UpdateProductForm";
 
 function ProductItem(props) {
   const [styles, setStyles] = useState(verticalstyles);
   const [isCart, setIsCart] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const router = useRouter();
 
@@ -32,6 +35,10 @@ function ProductItem(props) {
 
   function handleCart(id) {}
 
+  function closeModal() {
+    setShowModal(false);
+  }
+
   useEffect(() => {
     console.log(router.pathname);
     if (router.pathname == "/cart") {
@@ -41,58 +48,65 @@ function ProductItem(props) {
   }, []);
 
   return (
-    <div className={styles.productCard}>
-      <img
-        src={props.product.image}
-        alt={props.product.name}
-        className={styles.productImage}
-      />
-      <h2>{props.product.name}</h2>
-      <p className={styles.description}>{props.product.description}</p>
-      <p className={styles.price}>
-        <span className={styles.originalPrice}>${props.product.price}</span>
-        <span className={styles.discountedPrice}>
-          ${props.product.discountedPrice}
-        </span>
-        {isCart && (
-          <span className={styles.quantity}>
-            quantity : {props.product.quantity}
+    <>
+      <div>
+        <Modal isOpen={showModal} onClose={closeModal}>
+          <UpdateProductForm product={props.product} />
+        </Modal>
+      </div>
+      <div className={styles.productCard}>
+        <img
+          src={props.product.image}
+          alt={props.product.name}
+          className={styles.productImage}
+        />
+        <h2>{props.product.name}</h2>
+        <p className={styles.description}>{props.product.description}</p>
+        <p className={styles.price}>
+          <span className={styles.originalPrice}>${props.product.price}</span>
+          <span className={styles.discountedPrice}>
+            ${props.product.discountedPrice}
           </span>
+          {isCart && (
+            <span className={styles.quantity}>
+              quantity : {props.product.quantity}
+            </span>
+          )}
+        </p>
+        {router.pathname == "/seller/products" && (
+          <div className={styles.buttonContainer}>
+            <button
+              className={styles.editButton}
+              onClick={() => setShowModal(true)}
+            >
+              Edit
+            </button>
+            <button
+              className={styles.deleteButton}
+              onClick={() => handleDelete(props.product.id)}
+            >
+              Delete
+            </button>
+          </div>
         )}
-      </p>
-      {router.pathname == "/seller/products" && (
-        <div className={styles.buttonContainer}>
-          <button
-            className={styles.editButton}
-            onClick={() => handleEdit(props.product.id)}
-          >
-            Edit
-          </button>
-          <button
-            className={styles.deleteButton}
-            onClick={() => handleDelete(props.product.id)}
-          >
-            Delete
-          </button>
-        </div>
-      )}
-      {router.pathname == "/" && (
-        <div className={styles.buttonContainer}>
-          <button
-            className={styles.editButton}
-            onClick={() => handleCart(props.product.id)}
-          >
-            Add To Cart
-          </button>
-          <button
-            className={styles.deleteButton}
-            onClick={() => handleBuy(props.product.id)}
-          >
-            Buy
-          </button>
-        </div>
-      )}
-    </div>
+        {router.pathname == "/" && (
+          <div className={styles.buttonContainer}>
+            <button
+              className={styles.editButton}
+              onClick={() => handleCart(props.product.id)}
+            >
+              Add To Cart
+            </button>
+            <button
+              className={styles.deleteButton}
+              onClick={() => handleBuy(props.product.id)}
+            >
+              Buy
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
