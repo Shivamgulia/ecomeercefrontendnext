@@ -11,7 +11,7 @@ function ProductList(props) {
 
   useEffect(() => {
     setProducts(props.products);
-  }, []);
+  }, [props.products]);
 
   return (
     <div
@@ -19,7 +19,7 @@ function ProductList(props) {
         router.pathname == "/cart" ? styles.horizontallist : styles.list
       }
     >
-      {products.map((product, index) => (
+      {products?.map((product, index) => (
         
         <div key={index}>
           <ProductItem product={product} />
