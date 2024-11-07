@@ -20,6 +20,7 @@ function ProductList(props) {
       }
     >
       {products.map((product, index) => (
+        
         <div key={index}>
           <ProductItem product={product} />
         </div>
