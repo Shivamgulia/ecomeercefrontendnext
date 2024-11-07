@@ -5,9 +5,19 @@
   min-height: 100vh;
   place-items: center;
   grid-template-columns: 100vw;
+  /* grid-template-rows: 10vh 90vh; */
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
   background-color: #ffc400;
+}
+
+.navCont {
+  display: flex;
+  position: fixed;
+  top: 10px;
+  justify-content: space-between;
+  height: 10vh;
+  width: 97vw;
 }
 
 .loginCont {
@@ -19,9 +29,9 @@
 }
 
 .goback {
-  position: absolute;
-  left: 20px;
-  top: 20px;
+  /* position: absolute; */
+  /* left: 20px; */
+  /* top: 20px; */
   background-color: inherit;
   color: #00233d;
   border: none;

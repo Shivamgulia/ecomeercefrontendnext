@@ -45,23 +45,33 @@ export default function Login(props) {
 
   return (
     <div className={`${styles.cont}`}>
-      <div className={styles.wave1}></div>
+      {/* <div className={styles.wave1}></div>
       <div className={styles.wave2}></div>
-      <div className={styles.wave3}></div>
+      <div className={styles.wave3}></div> */}
       <div className={styles.loginCont}>
-        <button
-          className={`${styles.goback}`}
-          onClick={() => {
-            router.push("/signup");
-          }}
-        >
-          Sign Up
-          {/* <IoIosArrowBack size="30px" /> Back to Ships */}
-        </button>
+        <div className={styles.navCont}>
+          <button
+            className={`${styles.goback}`}
+            onClick={() => {
+              router.push("/signup");
+            }}
+          >
+            Sign Up
+            {/* <IoIosArrowBack size="30px" /> Back to Ships */}
+          </button>
+          <button
+            className={`${styles.goback}`}
+            onClick={() => {
+              router.push("/sellerlogin");
+            }}
+          >
+            Seller Login
+            {/* <IoIosArrowBack size="30px" /> Back to Ships */}
+          </button>
+        </div>
 
         <div className={`${styles.formDiv}`}>
           <h1 className={`${styles.heading}`}>Login</h1>
-          <button onClick={signOut}>logout</button>
           <form action="" className={styles.loginForm} onSubmit={onSubmit}>
             <div className={`${styles.error}`}>
               {error && <h4>Invalid Credentials</h4>}

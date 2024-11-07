@@ -14,9 +14,9 @@
   transition: transform 0.2s ease;
 }
 
-.productCard:hover {
+/* .productCard:hover {
   transform: translateY(-5px);
-}
+} */
 
 /* Product image on the left side */
 .productImage {
