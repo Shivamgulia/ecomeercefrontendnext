@@ -40,7 +40,6 @@ function ProductItem(props) {
   }
 
   useEffect(() => {
-    console.log(router.pathname);
     if (router.pathname == "/cart") {
       setStyles(horizontalstyles);
       setIsCart(true);
@@ -65,7 +64,7 @@ function ProductItem(props) {
         <p className={styles.price}>
           <span className={styles.originalPrice}>${props.product.price}</span>
           <span className={styles.discountedPrice}>
-            ${props.product.discountedPrice}
+            ${props.product["discounted_price"]}
           </span>
           {isCart && (
             <span className={styles.quantity}>
