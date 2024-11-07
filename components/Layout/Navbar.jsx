@@ -23,6 +23,9 @@ const Navbar = () => {
         <Link href="/orders" className={styles.link}>
           View Orders
         </Link>
+        <Link href="/seller/addproduct" className={styles.link}>
+          Add New Product
+        </Link>
         <div className={styles.link} onClick={signOut}>
           Logout
         </div>
