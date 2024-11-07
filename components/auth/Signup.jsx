@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "@/styles/components/Auth/Signup.module.css";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { toast } from "react-toastify";  // Import toast for notifications
+import { toast } from "react-toastify";
 
 function SignUp(props) {
   const [loading, setLoading] = useState(false);
@@ -25,6 +25,9 @@ function SignUp(props) {
 
     const email = event.target.email.value;
     const password = event.target.password.value;
+    const username = event.target.username.value;
+    const address = event.target.address.value;
+    const contact = event.target.contact.value;
 
     // Define endpoint based on user role
     const endpoint =
@@ -34,10 +37,13 @@ function SignUp(props) {
 
     try {
       const response = await fetch(endpoint, {
-        method:"POST",headers:{
-"Content-Type": "application/json"
-        },body:JSON.stringify({ email, password })});
-      const data = response.data;
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, username, address, contact }),
+      });
+      const data = await response.json();
 
       if (!data.error) {
         toast.success("User Created Successfully");
@@ -75,6 +81,21 @@ function SignUp(props) {
                   <h4>{error}</h4>
                 </div>
               )}
+
+              <div className={styles.formInput}>
+                <label htmlFor="username" className={styles.label}>
+                  Username
+                </label>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="Enter your username"
+                  required
+                  className={styles.input}
+                />
+              </div>
+
               <div className={styles.formInput}>
                 <label htmlFor="email" className={styles.label}>
                   Email
@@ -100,6 +121,34 @@ function SignUp(props) {
                   id="password"
                   placeholder={showPassword ? "password@123" : "XXXXXXXXXXXX"}
                   required
+                />
+              </div>
+
+              <div className={styles.formInput}>
+                <label htmlFor="contact" className={styles.label}>
+                  Contact
+                </label>
+                <input
+                  type="text"
+                  name="contact"
+                  id="contact"
+                  placeholder="Enter your contact number"
+                  required
+                  className={styles.input}
+                />
+              </div>
+
+              <div className={styles.formInput}>
+                <label htmlFor="address" className={styles.label}>
+                  Address
+                </label>
+                <input
+                  type="text"
+                  name="address"
+                  id="address"
+                  placeholder="Enter your address"
+                  required
+                  className={styles.input}
                 />
               </div>
 
