@@ -36,7 +36,7 @@ function OrderItem(props) {
 
         <div className={styles.buttonContainer}>
           <span className={styles.quantity}>
-            quantity : {props.product.quantity}
+            quantity : 1
           </span>
         </div>
       </div>

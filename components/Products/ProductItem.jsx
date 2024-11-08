@@ -14,18 +14,41 @@ function ProductItem(props) {
   const session = useSession();
 
   const router = useRouter();
-  
+
 
   const handleEdit = (id) => {
     alert(`Edit product with ID: ${id}`);
   };
 
-  const handleDelete = (id) => {
-    if (confirm(`Are you sure you want to delete this product?`)) {
-      setProducts(products.filter((product) => product.id !== id));
-      alert(`Product with ID: ${id} has been deleted.`);
+  const handleDelete = async (pid) => {
+    console.log(pid);
+    
+    if (confirm("Are you sure you want to delete this product?")) {
+      const endpoint = `http://127.0.0.1:8000/test/deleteproduct/${pid}/`;
+  
+      try {
+        const response = await fetch(endpoint, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.data?.user?.access}`, // Use token if needed
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error("Failed to delete.");
+        }
+  
+        const data = await response.json();
+        alert("Deleted successfully!");
+        window.location.reload(); // Refresh page after deletion
+      } catch (error) {
+        console.error("Error in deletion:", error);
+        alert("Error deleting item. Please try again.");
+      }
     }
   };
+  
 
   const handlePost = (id) => {
     if (confirm(`Are you sure you want to delete this product?`)) {
@@ -35,18 +58,18 @@ function ProductItem(props) {
   };
 
   function handleBuy(product_id) {
-    
+
     const endpoint = "http://127.0.0.1:8000/test/order/";
     const buyer = session?.data?.user?.user.id;
-  
+
     // Create the order payload
-    
+
     const orderData = {
       "product_id": product_id,
       "buyer": buyer
       // Additional data as required by your backend, like user_id or quantity
     };
-  
+
     fetch(endpoint, {
       method: "POST",
       headers: {
@@ -72,10 +95,10 @@ function ProductItem(props) {
   }
 
   // const [toggle,setToggle] = useState(true);
-  
+
   async function handleDeleteCart(id) {
     const endpoint = `http://127.0.0.1:8000/test/deletecartitem/${id}/`;
-  
+
     try {
       const response = await fetch(endpoint, {
         method: "DELETE",
@@ -84,11 +107,11 @@ function ProductItem(props) {
           Authorization: `Bearer ${session?.data?.user?.access}`, // Use token if needed
         },
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to delete.");
       }
-  
+
       const data = await response.json();
       alert("Deleted successfully!");
       window.location.reload();
@@ -97,11 +120,11 @@ function ProductItem(props) {
       alert("Error deleting item. Please try again.");
     }
   }
-  
+
 
   function handleCart(id) {
     const endpoint = "http://127.0.0.1:8000/test/addtocart/";
-  
+
     // Create the order payload
     const orderData = {
       products: [
@@ -114,8 +137,8 @@ function ProductItem(props) {
     };
 
     // console.log(session?.data?.user?.access);
-    
-  
+
+
     fetch(endpoint, {
       method: "POST",
       headers: {
@@ -149,6 +172,7 @@ function ProductItem(props) {
       setIsCart(true);
     }
   }, []);
+  
 
   return (
     <>
@@ -158,29 +182,29 @@ function ProductItem(props) {
         </Modal>
       </div>
       <div className={styles.productCard}>
-        {router.pathname != "/cart" &&<img
+        {router.pathname != "/cart" && <img
           src={props.product.image}
           alt={props.product.name}
           className={styles.productImage}
         />}
-        <h2>{props.product.product_name}</h2>
+        <h2>{router.pathname == "/cart" ? props.product.product_name : props.product.name }</h2>
         {router.pathname != "/cart" && <p className={styles.description}>{props.product.description}</p>}
         <p className={styles.price}>
-          <span className={styles.originalPrice}>${router.pathname == "/" ? props.product.price :props.product.product_price}</span>
+          <span className={styles.originalPrice}>${router.pathname == "/" ? props.product.price : props.product.product_price}</span>
           <span className={styles.discounted_price}>
-            ${router.pathname != "/cart" ? props.product.discounted_price :props.product.product_discounted_price}
+            ${router.pathname != "/cart" ? props.product.discounted_price : props.product.product_discounted_price}
           </span>
           {isCart && (
             <span className={styles.quantity}>
               quantity : {props.product.quantity}
             </span>
           )}
-          {router.pathname == "/cart" &&<button
-              className={styles.deleteButton}
-              onClick={() => handleDeleteCart(props.product.product)}
-            >
-              Remove
-            </button>}
+          {router.pathname == "/cart" && <button
+            className={styles.deleteButton}
+            onClick={() => handleDeleteCart(props.product.product)}
+          >
+            Remove
+          </button>}
         </p>
         {router.pathname == "/seller/products" && (
           <div className={styles.buttonContainer}>
