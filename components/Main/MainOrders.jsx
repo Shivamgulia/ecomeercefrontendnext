@@ -28,9 +28,9 @@ function MainOrders() {
 
       const data = await response.json();
 
-      console.log(data);
+      // console.log('b',data.products);
 
-      setOrderList(data);
+      setOrderList(data.products);
 
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -46,7 +46,7 @@ function MainOrders() {
 
   return (
     <Fragment>
-      <OrderList orders={demoOrders} />
+      <OrderList orders={orderList} />
     </Fragment>
   );
 }
