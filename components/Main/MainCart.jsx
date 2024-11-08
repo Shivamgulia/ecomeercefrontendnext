@@ -62,7 +62,6 @@ function MainCart() {
         })
         .then((data) => {
           alert("Order placed successfully!");
-          setItemList([]);
           console.log("Order data:", data); // Optionally, log the data
         })
         .catch((error) => {
@@ -70,6 +69,7 @@ function MainCart() {
           alert("Error placing order. Please try again.");
         });
     });
+    setItemList([]);
   }
 
   useEffect(() => {
