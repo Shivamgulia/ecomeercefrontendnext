@@ -5,11 +5,13 @@ import horizontalstyles from "@/styles/components/Products/ProductItemListView.m
 import { useRouter } from "next/router";
 import Modal from "../Modal/Modal";
 import UpdateProductForm from "../Forms/UpdateProductForm";
+import { useSession } from "next-auth/react";
 
 function ProductItem(props) {
   const [styles, setStyles] = useState(verticalstyles);
   const [isCart, setIsCart] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const session = useSession();
 
   const router = useRouter();
 
@@ -31,9 +33,109 @@ function ProductItem(props) {
     }
   };
 
-  function handleBuy(id) {}
+  function handleBuy(product) {
+    console.log(product);
+    
+    // const endpoint = "http://127.0.0.1:8000/test/order/";
+  
+    // // Create the order payload
+    
+    // const orderData = {
+    //   product_id: id,
+    //   // Additional data as required by your backend, like user_id or quantity
+    // };
+  
+    // fetch(endpoint, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${session?.data?.accessToken}`, // Use token if needed
+    //   },
+    //   body: JSON.stringify(orderData),
+    // })
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Failed to place order.");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     alert("Order placed successfully!");
+    //     console.log("Order data:", data); // Optionally, log the data
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error placing order:", error);
+    //     alert("Error placing order. Please try again.");
+    //   });
+  }
 
-  function handleCart(id) {}
+  const [toggle,setToggle] = useState(true);
+  
+  async function handleDeleteCart(id) {
+    const endpoint = `http://127.0.0.1:8000/test/deletecartitem/${id}/`;
+  
+    try {
+      const response = await fetch(endpoint, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.data?.user?.access}`, // Use token if needed
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to delete.");
+      }
+  
+      const data = await response.json();
+      alert("Deleted successfully!");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error in deletion:", error);
+      alert("Error deleting item. Please try again.");
+    }
+  }
+  
+
+  function handleCart(id) {
+    const endpoint = "http://127.0.0.1:8000/test/addtocart/";
+  
+    // Create the order payload
+    const orderData = {
+      products: [
+        {
+          product_id: id,
+          quantity: 1, // Customize quantity as needed
+        }
+        // Add more items if necessary
+      ],
+    };
+
+    // console.log(session?.data?.user?.access);
+    
+  
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.data?.user?.access}`, // Use token if needed
+      },
+      body: JSON.stringify(orderData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add to cart.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        alert("Added successfully!");
+      })
+      .catch((error) => {
+        console.error("Error placing order:", error);
+        alert("Error placing order. Please try again.");
+      });
+  }
 
   function closeModal() {
     setShowModal(false);
@@ -54,23 +156,29 @@ function ProductItem(props) {
         </Modal>
       </div>
       <div className={styles.productCard}>
-        <img
+        {router.pathname != "/cart" &&<img
           src={props.product.image}
           alt={props.product.name}
           className={styles.productImage}
-        />
-        <h2>{props.product.name}</h2>
-        <p className={styles.description}>{props.product.description}</p>
+        />}
+        <h2>{props.product.product_name}</h2>
+        {router.pathname != "/cart" && <p className={styles.description}>{props.product.description}</p>}
         <p className={styles.price}>
-          <span className={styles.originalPrice}>${props.product.price}</span>
-          <span className={styles.discountedPrice}>
-            ${props.product["discounted_price"]}
+          <span className={styles.originalPrice}>${router.pathname == "/" ? props.product.price :props.product.product_price}</span>
+          <span className={styles.discounted_price}>
+            ${router.pathname != "/cart" ? props.product.discounted_price :props.product.product_discounted_price}
           </span>
           {isCart && (
             <span className={styles.quantity}>
               quantity : {props.product.quantity}
             </span>
           )}
+          {router.pathname == "/cart" &&<button
+              className={styles.deleteButton}
+              onClick={() => handleDeleteCart(props.product.product)}
+            >
+              Remove
+            </button>}
         </p>
         {router.pathname == "/seller/products" && (
           <div className={styles.buttonContainer}>
@@ -98,7 +206,7 @@ function ProductItem(props) {
             </button>
             <button
               className={styles.deleteButton}
-              onClick={() => handleBuy(props.product.id)}
+              onClick={() => handleBuy(props.product)}
             >
               Buy
             </button>

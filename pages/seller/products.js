@@ -25,8 +25,6 @@ export default function Products() {
         },
       });
   
-     
-  
       const data = await response.json();
 
       
@@ -50,7 +48,7 @@ export default function Products() {
     }
   }, [session.status, session.data]);
 
-  console.log(productList)
+  // console.log(productList)
   if(!productList)
     return (<>Loading</>)
 
