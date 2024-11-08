@@ -5,15 +5,32 @@ import { useSession } from "next-auth/react";
 function UpdateUserForm(props) {
   const session = useSession();
 
-  function publishProduct(event) {
+  async function publishProduct(event) {
     event.preventDefault();
 
     const form = event.target;
     const formData = new FormData(form);
     const formObj = Object.fromEntries(formData);
 
-    // post req to add product
-    console.log(formObj);
+    const role = session.data.user.role;
+
+    let url = "";
+    if (role == "seller") {
+      url = "/test/updateseller/";
+    } else {
+      url = "/test/updatecustomer/";
+    }
+
+    console.log(formObj, url);
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + session.data.user.access,
+      },
+      body: JSON.stringify(formObj),
+    });
   }
   return (
     <div className={styles.cont}>

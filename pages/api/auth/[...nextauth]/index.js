@@ -18,9 +18,9 @@ export default NextAuth({
 
       async authorize(credentials, req) {
         if (credentials.role == "buyer") {
-          console.log(`${process.env.API_URL}/test/customerlogin/`);
+          console.log(`${process.env.NEXT_PUBLIC_API_URL}/test/customerlogin/`);
           const response = await fetch(
-            `${process.env.API_URL}/test/customerlogin/`,
+            `${process.env.NEXT_PUBLIC_API_URL}/test/customerlogin/`,
             {
               method: "POST",
               headers: {
@@ -40,7 +40,7 @@ export default NextAuth({
           }
           return { ...data, role: credentials.role };
         } else {
-          console.log(`${process.env.API_URL}/test/sellerlogin/`);
+          console.log(`${process.env.NEXT_PUBLIC_API_URL}/test/sellerlogin/`);
           const response = await fetch(
             `${process.env.API_URL}/test/sellerlogin/`,
             {

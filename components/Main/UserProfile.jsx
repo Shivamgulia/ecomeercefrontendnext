@@ -6,6 +6,7 @@ import ProfileView from "../Profile/ProfileView";
 
 function UserProfile() {
   const [user, setUser] = useState();
+  const [loading, setLoading] = useState(true);
   const session = useSession();
   const router = useRouter();
 
@@ -18,7 +19,16 @@ function UserProfile() {
     }
   }, [session.status]);
 
-  if (session.status == "loading" || !user) return <h2>Loading</h2>;
+  useEffect(() => {
+    if (session.status != "loading" || !!user) {
+      setLoading(false);
+    }
+  }, [session.status, user]);
+
+  if (loading) {
+    return <h2>Loading</h2>;
+  }
+
   return (
     <>
       <ProfileView user={user} />
