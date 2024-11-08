@@ -182,11 +182,17 @@ function ProductItem(props) {
         </Modal>
       </div>
       <div className={styles.productCard}>
-        {router.pathname != "/cart" && <img
+        {router.pathname != "/cart" ? <img
           src={props.product.image}
           alt={props.product.name}
           className={styles.productImage}
-        />}
+        />:
+        <img
+          src={props.product.product_image}
+          alt={props.product.name}
+          className={styles.productImage}
+        />
+        }
         <h2>{router.pathname == "/cart" ? props.product.product_name : props.product.name }</h2>
         {router.pathname != "/cart" && <p className={styles.description}>{props.product.description}</p>}
         <p className={styles.price}>
