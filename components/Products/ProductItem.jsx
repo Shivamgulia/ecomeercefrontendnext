@@ -14,6 +14,7 @@ function ProductItem(props) {
   const session = useSession();
 
   const router = useRouter();
+  
 
   const handleEdit = (id) => {
     alert(`Edit product with ID: ${id}`);
@@ -33,43 +34,44 @@ function ProductItem(props) {
     }
   };
 
-  function handleBuy(product) {
-    console.log(product);
+  function handleBuy(product_id) {
     
-    // const endpoint = "http://127.0.0.1:8000/test/order/";
+    const endpoint = "http://127.0.0.1:8000/test/order/";
+    const buyer = session?.data?.user?.user.id;
   
-    // // Create the order payload
+    // Create the order payload
     
-    // const orderData = {
-    //   product_id: id,
-    //   // Additional data as required by your backend, like user_id or quantity
-    // };
+    const orderData = {
+      "product_id": product_id,
+      "buyer": buyer
+      // Additional data as required by your backend, like user_id or quantity
+    };
   
-    // fetch(endpoint, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${session?.data?.accessToken}`, // Use token if needed
-    //   },
-    //   body: JSON.stringify(orderData),
-    // })
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Failed to place order.");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     alert("Order placed successfully!");
-    //     console.log("Order data:", data); // Optionally, log the data
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error placing order:", error);
-    //     alert("Error placing order. Please try again.");
-    //   });
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.data?.user?.access}`, // Use token if needed
+      },
+      body: JSON.stringify(orderData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to place order.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        alert("Order placed successfully!");
+        console.log("Order data:", data); // Optionally, log the data
+      })
+      .catch((error) => {
+        console.error("Error placing order:", error);
+        alert("Error placing order. Please try again.");
+      });
   }
 
-  const [toggle,setToggle] = useState(true);
+  // const [toggle,setToggle] = useState(true);
   
   async function handleDeleteCart(id) {
     const endpoint = `http://127.0.0.1:8000/test/deletecartitem/${id}/`;
@@ -206,7 +208,7 @@ function ProductItem(props) {
             </button>
             <button
               className={styles.deleteButton}
-              onClick={() => handleBuy(props.product)}
+              onClick={() => handleBuy(props.product.id)}
             >
               Buy
             </button>
